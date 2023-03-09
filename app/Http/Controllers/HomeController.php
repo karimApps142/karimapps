@@ -10,4 +10,9 @@ class HomeController extends Controller
     {
         return Inertia::render('Home');
     }
+
+    function details()
+    {
+        return Inertia::render('Detail');
+    }
 }

@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import Footer from "@/Components/Footer.vue";
+</script>
 
 <template>
-  <div class="bg-gray-600 flex items-center justify-center flex-row">
+  <div class="flex items-center justify-center flex-col">
     <slot />
   </div>
 </template>

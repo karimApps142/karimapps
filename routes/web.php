@@ -18,6 +18,8 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('project/{slug}', [HomeController::class, 'details'])->name('detail');
+
 
 
 
