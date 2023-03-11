@@ -2,12 +2,15 @@
 import Header from "@/Components/Header.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
 import Footer from "@/Components/Footer.vue";
+import ProjectInfo from "@/Components/details/ProjectInfo.vue";
+import ProjectGallery from "@/Components/details/ProjectGallery.vue";
 </script>
 <template>
   <BaseLayout>
     <div class="w-full bg-green-700">
       <Header />
-      <div class="h-screen"></div>
+      <ProjectInfo />
+      <ProjectGallery />
       <Footer />
     </div>
   </BaseLayout>
