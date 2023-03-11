@@ -18,6 +18,7 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
-        "typed.js": "^2.0.12"
+        "typed.js": "^2.0.12",
+        "vue3-lottie": "^2.5.0"
     }
 }

@@ -1,5 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
+import { Link } from "@inertiajs/vue3";
 
 const rightMenu = [
   {
@@ -33,9 +34,9 @@ const rightMenu = [
 <template>
   <div class="h-20 flex justify-between items-center px-10">
     <!-- logo  -->
-    <div>
+    <Link :href="route('home')">
       <h2 class="text-white text-xl uppercase">Karimapps</h2>
-    </div>
+    </Link>
 
     <!-- right menu  -->
     <div class="flex justify-between items-center">
