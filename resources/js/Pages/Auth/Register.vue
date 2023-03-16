@@ -30,7 +30,7 @@ const submit = () => {
       class="flex items-center justify-center h-screen w-full bg-gradient-to-tr from-neutral-300 via-slate-300 to-gray-300"
     >
       <section
-        class="flex items-center justify-center w-[800px] h-[90vh] rounded-3xl bg-gradient-to-tl from-slate-100 via-gray-100 to-gray-100 shadow-2xl overflow-hidden"
+        class="flex items-center justify-center w-[800px] h-[90vh] rounded-lg bg-gradient-to-tl from-slate-100 via-gray-100 to-gray-100 shadow-2xl overflow-hidden"
       >
         <form
           @submit.prevent="submit"
@@ -121,7 +121,7 @@ const submit = () => {
             </PrimaryButton>
           </div>
         </form>
-        <div class="flex-1 h-full w-full border-l p-5">
+        <div class="flex-1 h-full w-full border-l p-5 bg-white">
           <Vue3Lottie :animationData="AstronautJSON" />
         </div>
       </section>
