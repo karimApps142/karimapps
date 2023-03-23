@@ -11,4 +11,14 @@ class DashboardController extends Controller
     {
         return Inertia::render('Admin/Dashboard');
     }
+
+    function projects()
+    {
+        return Inertia::render('Admin/Projects');
+    }
+
+    function settings()
+    {
+        return Inertia::render('Admin/Settings');
+    }
 }

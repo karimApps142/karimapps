@@ -8,7 +8,7 @@ const drawer = ref(false);
 <template>
   <v-layout>
     <Menu />
-    <Header title="Dashboard" />
+    <Header title="Settings" />
     <v-main style="height: 500px">
       <v-card-text>
         The navigation drawer will appear from the bottom on smaller size screens.
