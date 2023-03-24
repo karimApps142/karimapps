@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import Header from "@/Components/dashboard/Header.vue";
 import Menu from "@/Components/dashboard/Menu.vue";
+import ProjectModal from "@/Components/dashboard/Modal.vue";
+
 const drawer = ref(false);
 </script>
 
@@ -14,6 +16,7 @@ const drawer = ref(false);
         The navigation drawer will appear from the bottom on smaller size screens.
       </v-card-text>
     </v-main>
+    <ProjectModal />
   </v-layout>
   <!-- <Link
     :href="route('logout')"

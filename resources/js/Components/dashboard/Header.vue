@@ -20,5 +20,9 @@ const props = defineProps({
     <v-toolbar-title>{{ props.title }}</v-toolbar-title>
 
     <v-spacer></v-spacer>
+
+    <div class="mr-4">
+      <v-btn elevation="5" icon="mdi-plus" @click="store.toggleDialog"></v-btn>
+    </div>
   </v-app-bar>
 </template>
