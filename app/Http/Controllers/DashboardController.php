@@ -21,4 +21,16 @@ class DashboardController extends Controller
     {
         return Inertia::render('Admin/Settings');
     }
+
+    function createProject(Request $request)
+    {
+        $request->validate([
+            'title' => "required",
+            'framework' => "required",
+            'image' => "required",
+            'screens' => "required",
+            'version' => "required",
+            'note' => "required",
+        ]);
+    }
 }

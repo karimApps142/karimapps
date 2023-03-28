@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name("dashboard");
     Route::get('/projects', [DashboardController::class, 'projects'])->name("projects");
     Route::get('/settings', [DashboardController::class, 'settings'])->name("settings");
+    Route::post('/prokect-submit', [DashboardController::class, 'createProject'])->name("project.submit");
 });
 
 
