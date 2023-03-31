@@ -15,4 +15,13 @@ class Project extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function getImageAttribute($value)
+    {
+        $urlParts = parse_url($value);
+        if (isset($urlParts['scheme']) && ($urlParts['scheme'] === 'http' || $urlParts['scheme'] === 'https')) {
+            return $value;
+        }
+        return asset('storage/' . $value);
+    }
 }

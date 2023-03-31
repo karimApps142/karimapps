@@ -78,12 +78,13 @@ const onChangeImages = (e) => {
       <v-card-text>
         <v-container>
           <div
-            class="w-96 my-4 rounded-lg h-40 bg-gray-400 hover:opacity-80 cursor-pointer"
+            class="w-96 mt-4 rounded-lg h-40 bg-gray-400 hover:opacity-80 cursor-pointer"
             @click="onPickImage"
           >
             <img ref="showImage" class="w-full h-full object-contain" />
             <input type="file" hidden ref="image" @change="onChangeImage" />
           </div>
+          <InputError class="my-2" :message="form.errors.image" />
           <div class="flex items-center justify-between">
             <div class="flex-1 mx-2">
               <InputLabel for="title" value="Project Title(required)" />

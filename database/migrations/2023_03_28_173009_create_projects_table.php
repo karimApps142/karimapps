@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('framework');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->string('screens');
             $table->string('version');
             $table->text('note');

@@ -11,7 +11,6 @@ class Image extends Model
 
     protected $guarded = [];
 
-
     function project()
     {
         return $this->belongsTo(Project::class);
