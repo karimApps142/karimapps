@@ -21,6 +21,19 @@ class DashboardController extends Controller
         return Inertia::render('Admin/Projects', ['projects' => $projects]);
     }
 
+    function projectDetails(Project $project)
+    {
+        $project->load('images');
+
+        return Inertia::render('Admin/ProjectDetail', ['project' => $project]);
+    }
+
+    function projectDelete(Project $project)
+    {
+        $project->delete();
+        return to_route('projects');
+    }
+
     function settings()
     {
         return Inertia::render('Admin/Settings');

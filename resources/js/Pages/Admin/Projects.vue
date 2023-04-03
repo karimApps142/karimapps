@@ -3,6 +3,7 @@ import { ref } from "vue";
 import Header from "@/Components/dashboard/Header.vue";
 import Menu from "@/Components/dashboard/Menu.vue";
 import ProjectModal from "@/Components/dashboard/Modal.vue";
+import { Link } from "@inertiajs/vue3";
 
 defineProps(["projects"]);
 
@@ -13,14 +14,19 @@ const drawer = ref(false);
   <v-layout>
     <Menu />
     <Header title="Projects" />
-    <v-main style="height: 500px">
+    <v-main>
       <div class="flex items-center flex-wrap m-4">
-        <div v-for="project in projects" :key="project.id">
+        <Link
+          as="div"
+          v-for="project in projects"
+          :key="project.id"
+          :href="route('projects.details', { project: project.id })"
+        >
           <p class="px-2 font-bold text-lg italic uppercase">{{ project?.title }}</p>
           <div class="w-40 h-60 rounded shadow m-2 overflow-hidden">
             <img :src="project?.image" class="object-cover w-full h-full" />
           </div>
-        </div>
+        </Link>
       </div>
     </v-main>
     <ProjectModal />
