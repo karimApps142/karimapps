@@ -13,7 +13,7 @@ const drawer = ref(false);
 <template>
   <v-layout>
     <Menu />
-    <Header title="Projects" />
+    <Header title="Projects" :showAddButton="true" />
     <v-main>
       <div class="flex items-center flex-wrap m-4">
         <Link

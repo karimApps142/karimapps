@@ -15,13 +15,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project}/details', [DashboardController::class, 'projectDetails'])->name("projects.details");
     Route::delete('/projects/{project}', [DashboardController::class, 'projectDelete'])->name("projects.delete");
 
-
     Route::get('/settings', [DashboardController::class, 'settings'])->name("settings");
     Route::post('/prokect-submit', [DashboardController::class, 'createProject'])->name("project.submit");
+    Route::post('/prokect-submit/{project}', [DashboardController::class, 'updateProject'])->name("project.update");
 });
-
-
-
 
 
 require __DIR__ . '/auth.php';

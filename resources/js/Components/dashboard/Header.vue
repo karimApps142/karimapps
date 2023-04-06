@@ -8,6 +8,10 @@ const props = defineProps({
     type: String,
     default: "Karimapps",
   },
+  showAddButton: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 <template>
@@ -21,7 +25,7 @@ const props = defineProps({
 
     <v-spacer></v-spacer>
 
-    <div class="mr-4">
+    <div v-if="showAddButton" class="mr-4">
       <v-btn elevation="5" icon="mdi-plus" @click="store.toggleDialog"></v-btn>
     </div>
   </v-app-bar>

@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
 import { useDrawerStore } from "../../store/drawer.js";
 import InputError from "../base/InputError.vue";
 import TextInput from "../base/TextInput.vue";
@@ -8,6 +7,13 @@ import InputLabel from "../base/InputLabel.vue";
 import Button from "../Button.vue";
 
 const store = useDrawerStore();
+
+const props = defineProps({
+  editMode: {
+    type: Number,
+    default: 0,
+  },
+});
 
 const image = ref();
 const images = ref();
@@ -20,27 +26,27 @@ const setRef = (index) => (el) => {
   showImages.value[index] = el;
 };
 
-const form = useForm({
-  title: "",
-  framework: "",
-  image: null,
-  screens: "",
-  version: "",
-  note: "",
-  images: [],
-});
-
 const onPickImage = () => {
   image.value?.click();
 };
 
 const onSubmit = () => {
-  form.post(route("project.submit"), {
-    preserveScroll: true,
-    onSuccess: () => {
-      store.toggleDialog();
-    },
-  });
+  const projectRoute = props.editMode
+    ? route("project.update", { project: props.editMode })
+    : route("project.submit");
+
+  if (props.editMode) {
+    store.modifyImages();
+  }
+
+  setTimeout(() => {
+    store.form.post(projectRoute, {
+      preserveScroll: true,
+      onSuccess: () => {
+        store.toggleDialog();
+      },
+    });
+  }, 200);
 };
 
 const onPickMultipleImages = () => {
@@ -48,7 +54,7 @@ const onPickMultipleImages = () => {
 };
 const onChangeImage = (e) => {
   const file = e.target.files[0];
-  form.image = file;
+  store.form.image = file;
 
   var reader = new FileReader();
   reader.onloadend = function () {
@@ -59,7 +65,7 @@ const onChangeImage = (e) => {
 
 const onChangeImages = (e) => {
   const file = e.target.files[0];
-  form.images.push(file);
+  store.form.images.push(file);
 
   var reader = new FileReader();
   reader.onloadend = function () {
@@ -73,7 +79,7 @@ const onChangeImages = (e) => {
   <v-dialog v-model="store.dialog" persistent width="1024">
     <v-card>
       <v-card-title>
-        <span class="text-h5">User Profile</span>
+        <span class="text-h5"> {{ editMode ? "Edit" : "Add" }} Project</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -81,10 +87,14 @@ const onChangeImages = (e) => {
             class="w-96 mt-4 rounded-lg h-40 bg-gray-400 hover:opacity-80 cursor-pointer"
             @click="onPickImage"
           >
-            <img ref="showImage" class="w-full h-full object-contain" />
+            <img
+              ref="showImage"
+              :src="editMode ? store.form.image : ''"
+              class="w-full h-full object-contain"
+            />
             <input type="file" hidden ref="image" @change="onChangeImage" />
           </div>
-          <InputError class="my-2" :message="form.errors.image" />
+          <InputError class="my-2" :message="store.form.errors.image" />
           <div class="flex items-center justify-between">
             <div class="flex-1 mx-2">
               <InputLabel for="title" value="Project Title(required)" />
@@ -93,11 +103,11 @@ const onChangeImages = (e) => {
                 id="title"
                 type="text"
                 class="mt-1 block w-full border"
-                v-model="form.title"
+                v-model="store.form.title"
                 required
                 autofocus
               />
-              <InputError class="mt-2" :message="form.errors.title" />
+              <InputError class="mt-2" :message="store.form.errors.title" />
             </div>
             <div class="flex-1 mx-2">
               <InputLabel for="framework" value="Project Framework(required)" />
@@ -106,10 +116,10 @@ const onChangeImages = (e) => {
                 id="framework"
                 type="text"
                 class="mt-1 block w-full border"
-                v-model="form.framework"
+                v-model="store.form.framework"
                 required
               />
-              <InputError class="mt-2" :message="form.errors.framework" />
+              <InputError class="mt-2" :message="store.form.errors.framework" />
             </div>
           </div>
           <div class="flex items-center justify-between mt-5">
@@ -120,10 +130,10 @@ const onChangeImages = (e) => {
                 id="screens"
                 type="text"
                 class="mt-1 block w-full border"
-                v-model="form.screens"
+                v-model="store.form.screens"
                 required
               />
-              <InputError class="mt-2" :message="form.errors.screens" />
+              <InputError class="mt-2" :message="store.form.errors.screens" />
             </div>
             <div class="flex-1 mx-2">
               <InputLabel for="version" value="Project Version(required)" />
@@ -132,10 +142,10 @@ const onChangeImages = (e) => {
                 id="version"
                 type="text"
                 class="mt-1 block w-full border"
-                v-model="form.version"
+                v-model="store.form.version"
                 required
               />
-              <InputError class="mt-2" :message="form.errors.version" />
+              <InputError class="mt-2" :message="store.form.errors.version" />
             </div>
           </div>
 
@@ -146,10 +156,10 @@ const onChangeImages = (e) => {
                 id="note"
                 type="text"
                 class="mt-1 block w-full border"
-                v-model="form.note"
+                v-model="store.form.note"
                 required
               />
-              <InputError class="mt-2" :message="form.errors.note" />
+              <InputError class="mt-2" :message="store.form.errors.note" />
             </div>
           </div>
           <Button
@@ -161,8 +171,9 @@ const onChangeImages = (e) => {
           <input type="file" hidden ref="images" @change="onChangeImages" />
           <div class="flex items-center flex-wrap">
             <img
-              v-for="(image, index) in form.images"
+              v-for="(image, index) in store.form.images"
               :key="image"
+              :src="editMode ? image?.path : ''"
               :ref="setRef(index)"
               class="bg-gray-200 object-cover h-40 w-24 mr-5 my-3 rounded"
             />
