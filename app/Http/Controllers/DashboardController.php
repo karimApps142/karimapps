@@ -54,30 +54,28 @@ class DashboardController extends Controller
 
         // saving data to database 
 
-        $project = new Project;
-
-        $project->title = $request->title;
-        $project->framework = $request->framework;
-        $project->screens = $request->screens;
-        $project->version = $request->version;
-        $project->note = $request->note;
+        $project = Project::create([
+            "title" => $request->title,
+            "framework" => $request->framework,
+            "screens" => $request->screens,
+            "version" => $request->version,
+            "note" => $request->note
+        ]);
 
         if ($request->image) {
             $project->image = $request->file('image')->store('images', "public");
+            $project->save();
         }
-
-        $project->save();
-
 
         $images = $request->images;
 
         if ($images) {
             foreach ($images as $image) {
                 $path =   $image->store('images', "public");
-                $projectImage = new Image;
-                $projectImage->project_id = $project->id;
-                $projectImage->path = $path;
-                $projectImage->save();
+                Image::create([
+                    "project_id" => $project->id,
+                    "path" => $path,
+                ]);
             }
         }
     }
@@ -96,27 +94,29 @@ class DashboardController extends Controller
 
         // saving data to database 
 
-        $project->title = $request->title;
-        $project->framework = $request->framework;
-        $project->screens = $request->screens;
-        $project->version = $request->version;
-        $project->note = $request->note;
+        $project->update([
+            "title" => $request->title,
+            "framework" => $request->framework,
+            "screens" => $request->screens,
+            "version" => $request->version,
+            "note" => $request->note
+        ]);
 
         if ($request->image && $request->image !== $project->image) {
             $project->image = $request->file('image')->store('images', "public");
+            $project->save();
         }
 
-        $project->save();
 
         $images = $request->images;
 
         if ($images) {
             foreach ($images as $image) {
                 $path =   $image->store('images', "public");
-                $projectImage = new Image;
-                $projectImage->project_id = $project->id;
-                $projectImage->path = $path;
-                $projectImage->save();
+                Image::create([
+                    "project_id" => $project->id,
+                    "path" => $path,
+                ]);
             }
         }
     }
